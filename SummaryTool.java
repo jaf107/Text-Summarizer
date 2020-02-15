@@ -3,8 +3,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 public class SummaryTool {
     FileInputStream in;
@@ -30,7 +29,7 @@ public class SummaryTool {
         noOfParagraphs = 0;
         noOfSentences = 0;
         try{
-            in = new FileInputStream("");
+            in = new FileInputStream("F:\\SPL\\text-summarizer-master\\samples\\amazon/HP_Spectre_x360.txt");
             out = new FileOutputStream("SummaryOutput.txt");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -58,7 +57,9 @@ public class SummaryTool {
                     prevChar = nextChar;
                 }
 
-                sentences.add(new Sentence(noOfSentences,(new String(temp)).trim(),(new String(temp).trim().length(),noOfParagraphs));
+                sentences.add(new Sentence(noOfSentences,(new String(temp)).trim(),(new String(temp)).trim().length(),noOfParagraphs));
+
+                //sentences.add(new Sentence(noOfSentences,(new String(temp)).trim(),(new String(temp).trim().length(),noOfParagraphs));
                 noOfSentences++;
                 prevChar = nextChar;
             }
@@ -105,7 +106,7 @@ public class SummaryTool {
                 if(i<=j){
                     Sentence str1 = sentences.get(i);
                     Sentence str2 = sentences.get(j);
-                    intersectionMatrix[i][j] = noOfCommonWords(str1,str2) / ((double)(str1.noOfWords + str2.noOfWords)/2)
+                    intersectionMatrix[i][j] = noOfCommonWords(str1,str2) / ((double)(str1.noOfWords + str2.noOfWords)/2);
                 }else{
                     intersectionMatrix[i][j] = intersectionMatrix[j][i];
                 }
@@ -124,7 +125,70 @@ public class SummaryTool {
     }
 
     void createSummary(){
-        for()
+
+        for(int j=0;j<=noOfParagraphs;j++){
+            int primary_set = paragraphs.get(j).sentences.size()/5;
+
+            //Sort based on score (importance)
+            Collections.sort(paragraphs.get(j).sentences,new SentenceComparator());
+            for(int i=0;i<=primary_set;i++){
+                contentSummary.add(paragraphs.get(j).sentences.get(i));
+            }
+        }
+
+        //To ensure proper ordering
+        Collections.sort(contentSummary,new SentenceComparatorForSummary());
+
+    }
+
+
+    void printSentences(){
+        for(Sentence sentence : sentences){
+            System.out.println(sentence.number + " => " + sentence.value + " => " + sentence.stringLength  + " => " + sentence.noOfWords + " => " + sentence.paragraphNumber);
+        }
+    }
+
+    void printIntersectionMatrix(){
+        for(int i=0;i<noOfSentences;i++){
+            for(int j=0;j<noOfSentences;j++){
+                System.out.print(intersectionMatrix[i][j] + "    ");
+            }
+            System.out.print("\n");
+        }
+    }
+
+    void printDicationary(){
+        // Get a set of the entries
+        Set set = dictionary.entrySet();
+        // Get an iterator
+        Iterator i = set.iterator();
+        // Display elements
+        while(i.hasNext()) {
+            Map.Entry me = (Map.Entry)i.next();
+            System.out.print(((Sentence)me.getKey()).value + ": ");
+            System.out.println(me.getValue());
+        }
+    }
+
+    void printSummary(){
+        System.out.println("no of paragraphs = "+ noOfParagraphs);
+        for(Sentence sentence : contentSummary){
+            System.out.println(sentence.value);
+        }
+    }
+
+    double getWordCount(ArrayList<Sentence> sentenceList){
+        double wordCount = 0.0;
+        for(Sentence sentence:sentenceList){
+            wordCount +=(sentence.value.split(" ")).length;
+        }
+        return wordCount;
+    }
+
+    void printStats(){
+        System.out.println("number of words in Context : " + getWordCount(sentences));
+        System.out.println("number of words in Summary : " + getWordCount(contentSummary));
+        System.out.println("Commpression : " +getWordCount(contentSummary)/ getWordCount(sentences) );
     }
 
 
