@@ -1,6 +1,8 @@
+package com.company;
+
 import java.util.ArrayList;
 
-public class Paragraph {
+class Paragraph{
     int number;
     ArrayList<Sentence> sentences;
 
