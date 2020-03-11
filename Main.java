@@ -8,6 +8,7 @@ public class Main {
         summary.extractSentenceFromContext();
         summary.groupSentencesIntoParagraphs();
         summary.printSentences();
+        //summary.printIntersectionMatrix();
         summary.createIntersectionMatrix();
 
                 //System.out.println("INTERSECTION MATRIX");
@@ -16,7 +17,7 @@ public class Main {
         summary.createDictionary();
                 //summary.printDicationary();
 
-        System.out.println("SUMMMARY");
+        System.out.println("\n\nSUMMMARY");
         summary.createSummary();
         summary.printSummary();
 

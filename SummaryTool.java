@@ -35,8 +35,8 @@ class SummaryTool{
         noOfSentences = 0;
         noOfParagraphs = 0;
         try {
-            in = new FileInputStream("samples/articles/Jo Cox Murder_wallstreet");
-            out = new FileOutputStream("output/output.txt");
+            in = new FileInputStream("samples/amazon/nexus_6p.txt");
+            out = new FileOutputStream("output/nexus_6p_Summarized.txt");
         }catch(FileNotFoundException e){
             e.printStackTrace();
         }catch(Exception e){
@@ -52,9 +52,9 @@ class SummaryTool{
             while((nextChar = in.read()) != -1) {
                 j=0;
                 char[] temp = new char[100000];
-                while((char)nextChar != '.'){
+                while((char)nextChar != '.'){ // Sentence SEPARATOR
                     //System.out.println(nextChar + " ");
-                    temp[j] = (char)nextChar;
+                    temp[j] = (char)nextChar; //Buffer
                     if((nextChar = in.read()) == -1){
                         break;
                     }
@@ -96,6 +96,7 @@ class SummaryTool{
 
         paragraphs.add(paragraph);
     }
+
 
     double noOfCommonWords(Sentence str1, Sentence str2){
         double commonCount = 0;

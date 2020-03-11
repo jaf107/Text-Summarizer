@@ -3,7 +3,7 @@ package com.company;
 class Sentence{
     int paragraphNumber;
     int number;
-    int stringLength; //Don't need this
+    int stringLength;
     double score;
     int noOfWords;
     String value;
