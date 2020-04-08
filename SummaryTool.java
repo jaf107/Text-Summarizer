@@ -35,7 +35,7 @@ class SummaryTool{
         noOfSentences = 0;
         noOfParagraphs = 0;
         try {
-            in = new FileInputStream("samples/amazon/nexus_6p.txt");
+            in = new FileInputStream("New folder/Test.txt");
             out = new FileOutputStream("output/nexus_6p_Summarized.txt");
         }catch(FileNotFoundException e){
             e.printStackTrace();
@@ -46,6 +46,7 @@ class SummaryTool{
 
     /*Gets the sentences from the entire passage*/
     void extractSentenceFromContext(){
+        String tempString ;
         int nextChar,j=0;
         int prevChar = -1;
         try{
@@ -64,9 +65,9 @@ class SummaryTool{
                     j++;
                     prevChar = nextChar;
                 }
-
-                sentences.add(new Sentence(noOfSentences,
-                        (new String(temp)).trim(),
+                tempString = new  String(temp).trim();
+//
+                sentences.add(new Sentence(noOfSentences, tempString,
                         (new String(temp)).trim().length(),
                         noOfParagraphs));
                 noOfSentences++;
@@ -104,6 +105,7 @@ class SummaryTool{
         for(String str1Word : str1.value.split("\\s+")){
             for(String str2Word : str2.value.split("\\s+")){
                 if(str1Word.compareToIgnoreCase(str2Word) == 0){
+                    System.out.println(str1Word);
                     commonCount++;
                 }
             }
@@ -121,6 +123,10 @@ class SummaryTool{
                     Sentence str1 = sentences.get(i);
                     Sentence str2 = sentences.get(j);
                     intersectionMatrix[i][j] = noOfCommonWords(str1,str2) / ((double)(str1.noOfWords + str2.noOfWords) /2);
+
+                    System.out.println("\n\n"+noOfCommonWords(str1,str2));
+                    System.out.println(str1.value + "-> No of words  STR 1 :" + str1.noOfWords);
+                    System.out.println(str2.value + "-> No of words STR 2 :" +str2.noOfWords);
                 }else{
                     intersectionMatrix[i][j] = intersectionMatrix[j][i];
                 }

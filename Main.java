@@ -11,8 +11,8 @@ public class Main {
         //summary.printIntersectionMatrix();
         summary.createIntersectionMatrix();
 
-                //System.out.println("INTERSECTION MATRIX");
-                //summary.printIntersectionMatrix();
+                System.out.println("INTERSECTION MATRIX");
+                summary.printIntersectionMatrix();
 
         summary.createDictionary();
                 //summary.printDicationary();
@@ -21,6 +21,7 @@ public class Main {
         summary.createSummary();
         summary.printSummary();
 
+        System.out.println("\n\n");
         summary.printStats();
     }
 }
